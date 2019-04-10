@@ -16,7 +16,6 @@ class CustomAlert: UIView {
     @IBOutlet weak var alertButton: UIButton!
     @IBOutlet weak var alertView: UIView!
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         Bundle.main.loadNibNamed("CustomAlert", owner: self, options: nil)
@@ -45,8 +44,11 @@ class CustomAlert: UIView {
     
     func showAlert(Status: String?, message: String?, alertType: AlertType) {
         
-        self.alertStatus.text = Status ?? ""
-        self.alertMessage.text = message ?? ""
+        DispatchQueue.main.async {
+            self.alertStatus.text = Status ?? ""
+            self.alertMessage.text = message ?? ""
+        }
+        
         switch alertType {
         case .success:
             image.image = UIImage(named: "Success")
@@ -56,14 +58,12 @@ class CustomAlert: UIView {
             image.image = UIImage(named: "Failure")
             alertButton.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         }
-        
         UIApplication.shared.keyWindow?.addSubview(parentView)
         
     }
     
     @IBAction func alertButton(_ sender: Any) {
-        
         parentView.removeFromSuperview()
-        
     }
+    
 }
